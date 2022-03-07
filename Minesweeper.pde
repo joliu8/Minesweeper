@@ -49,16 +49,15 @@ public boolean isWon()
 {
   //your code here
   // if the blank swquares = the number of mines
-  int emptyButtons = 0;
-  for (int r = 0; r<NUM_ROWS; r++) {
-    for (int c =0; c<NUM_COLS; c++) {
-      if (buttons[r][c].clicked == false)
-        emptyButtons++;
-    }
-  }
-  if (emptyButtons >NUM_MINES && !mines.contains(emptyButtons))
-    return false;
-  return true;
+
+  for(int i = 0; i<mines.size(); i++)
+    if(mines.get(i).isFlagged() == true)
+      return false;
+    return true;
+    
+    
+  
+  
 }
 
 public void displayLosingMessage()
