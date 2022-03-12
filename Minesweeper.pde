@@ -1,9 +1,9 @@
 import de.bezier.guido.*;
 
 //Declare and initialize constants NUM_ROWS and NUM_COLS = 20
-private final static int NUM_ROWS = 15;
-private final static int NUM_COLS = 15;
-private final static int NUM_MINES = 6;
+private final static int NUM_ROWS = 25;
+private final static int NUM_COLS = 25;
+private final static int NUM_MINES = 15;
 private MSButton[][] buttons; //2d array of minesweeper buttons
 private ArrayList <MSButton> mines = new ArrayList <MSButton> (); //ArrayList of just the minesweeper buttons that are mined
 
@@ -23,7 +23,7 @@ void setup ()
     }
   }
   setMines();
-  System.out.println("here:" + ((NUM_ROWS * NUM_COLS) - mines.size()));
+  //System.out.println("here:" + ((NUM_ROWS * NUM_COLS) - mines.size()));
 }
 
 public void setMines()
@@ -34,7 +34,7 @@ public void setMines()
     int colNum = (int)(Math.random()*NUM_COLS);
     if (!mines.contains(buttons[rowNum][colNum])) {
       mines.add(buttons[rowNum][colNum]);
-      System.out.println(rowNum + " , " + colNum);
+      //System.out.println(rowNum + " , " + colNum);
     }
   }
 }
@@ -79,7 +79,13 @@ public void displayLosingMessage()
 public void displayWinningMessage()
 {
   //your code here
-  buttons[0][0].setLabel("You win!");
+  buttons[0][0].setLabel("W");
+  buttons[0][1].setLabel("I");
+  buttons[0][2].setLabel("N");
+  buttons[0][3].setLabel("N");
+  buttons[0][4].setLabel("E");
+  buttons[0][5].setLabel("R");
+  buttons[0][6].setLabel("!");
 }
 
 public boolean isValid(int r, int c)
@@ -148,13 +154,26 @@ public class MSButton
       for (int r = 0; r< NUM_ROWS; r++)
         for (int c = 0; c<NUM_COLS; c++)
           buttons[r][c].clicked = true;
-      buttons[0][1].setLabel("<- HAHA NOT");
-      
+      buttons[1][0].setLabel("J");
+      buttons[1][1].setLabel("O");
+      buttons[1][2].setLabel("K");
+      buttons[1][3].setLabel("E");
+      buttons[1][4].setLabel("");
+      buttons[1][5].setLabel("B");
+      buttons[1][6].setLabel("T");
+      buttons[1][7].setLabel("W");
+      buttons[1][8].setLabel("");
+      buttons[1][9].setLabel("U");
+      buttons[1][10].setLabel("");
+      buttons[1][11].setLabel("L");
+      buttons[1][12].setLabel("O");
+      buttons[1][13].setLabel("S");
+      buttons[1][14].setLabel("E");
     } else if (countMines(myRow, myCol) >0)
       buttons[myRow][myCol].setLabelNumber(countMines(myRow, myCol));
-      
+
     else {
-            if (isValid(myRow, myCol+1) && buttons[myRow][myCol+1].clicked == false)
+      if (isValid(myRow, myCol+1) && buttons[myRow][myCol+1].clicked == false)
         buttons[myRow][myCol+1].mousePressed();
       if (isValid(myRow+1, myCol+1) && buttons[myRow+1][myCol+1].clicked == false)
         buttons[myRow+1][myCol+1].mousePressed();
