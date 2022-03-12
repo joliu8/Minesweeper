@@ -1,9 +1,9 @@
 import de.bezier.guido.*;
 
 //Declare and initialize constants NUM_ROWS and NUM_COLS = 20
-private final static int NUM_ROWS = 5;
-private final static int NUM_COLS = 5;
-private final static int NUM_MINES = 5;
+private final static int NUM_ROWS = 15;
+private final static int NUM_COLS = 15;
+private final static int NUM_MINES = 6;
 private MSButton[][] buttons; //2d array of minesweeper buttons
 private ArrayList <MSButton> mines = new ArrayList <MSButton> (); //ArrayList of just the minesweeper buttons that are mined
 
@@ -22,8 +22,8 @@ void setup ()
       buttons[r][c] = new MSButton(r, c);
     }
   }
-
   setMines();
+  System.out.println("here:" + ((NUM_ROWS * NUM_COLS) - mines.size()));
 }
 
 public void setMines()
@@ -49,23 +49,30 @@ public boolean isWon()
 {
   //your code here
   // if the blank swquares = the number of mines
-
-  for(int i = 0; i<mines.size(); i++)
-    if(mines.get(i).isFlagged() == true)
-      return false;
+  int count = 0;
+  for (int r = 0; r< NUM_ROWS; r++) {
+    for (int c = 0; c<NUM_COLS; c++)
+      if (!mines.contains(buttons[r][c]) && buttons[r][c].clicked == true)
+        count++;
+  }
+  if (count == ((NUM_ROWS * NUM_COLS) - mines.size()))
     return true;
-    
-    
-  
-  
+  return false;
 }
+//for(int i = 0; i<buttons.size(); i++)
+//  if(buttons.get(i).isFlagged() == true)
+//return false;
+//return true;
+
+
+
+
 
 public void displayLosingMessage()
 {
+
+
   buttons[0][0].setLabel("You Lose");
-  for (int r = 0; r< NUM_ROWS; r++)
-    for (int c = 0; c<NUM_COLS; c++)
-      buttons[r][c].clicked = true;
 }
 
 
@@ -135,16 +142,34 @@ public class MSButton
     //}
     if (mouseButton == RIGHT)
       flagged = !flagged;
-      
-    else if (mines.contains(this))
+
+    else if (mines.contains(this)) {
       displayLosingMessage();
-    else if (countMines(myRow, myCol) >0)
+      for (int r = 0; r< NUM_ROWS; r++)
+        for (int c = 0; c<NUM_COLS; c++)
+          buttons[r][c].clicked = true;
+      buttons[0][1].setLabel("<- HAHA NOT");
+      
+    } else if (countMines(myRow, myCol) >0)
       buttons[myRow][myCol].setLabelNumber(countMines(myRow, myCol));
+      
     else {
-      for (int r = NUM_ROWS-1; r<=NUM_ROWS+1; r++)
-        for (int c = NUM_COLS-1; c<=NUM_COLS+1; c++)
-          if (isValid(r, c) == true && buttons[r][c].isFlagged() == true)
-            buttons[r][c].mousePressed();
+            if (isValid(myRow, myCol+1) && buttons[myRow][myCol+1].clicked == false)
+        buttons[myRow][myCol+1].mousePressed();
+      if (isValid(myRow+1, myCol+1) && buttons[myRow+1][myCol+1].clicked == false)
+        buttons[myRow+1][myCol+1].mousePressed();
+      if (isValid(myRow+1, myCol) && buttons[myRow+1][myCol].clicked == false)
+        buttons[myRow+1][myCol].mousePressed();
+      if (isValid(myRow+1, myCol-1) && buttons[myRow+1][myCol-1].clicked == false)
+        buttons[myRow+1][myCol-1].mousePressed();
+      if (isValid(myRow, myCol-1) && buttons[myRow][myCol-1].clicked == false)
+        buttons[myRow][myCol-1].mousePressed();
+      if (isValid(myRow-1, myCol-1) && buttons[myRow-1][myCol-1].clicked == false)
+        buttons[myRow-1][myCol-1].mousePressed();
+      if (isValid(myRow-1, myCol) && buttons[myRow-1][myCol].clicked == false)
+        buttons[myRow-1][myCol].mousePressed();
+      if (isValid(myRow-1, myCol+1) && buttons[myRow-1][myCol+1].clicked == false)
+        buttons[myRow-1][myCol+1].mousePressed();
     }
   }
   //your code here
